@@ -1,8 +1,17 @@
-from flask import Flask           # import flask
-app = Flask(__name__)             # create an app instance
+from flask import Flask
+import pandas as pd
 
-@app.route("/")                   # at the end point /
-def hello():                      # call method hello
-    return "Hello World!"         # which returns "hello world"
-if __name__ == "__main__":        # on running python app.py
-    app.run()                     # run the flask app
+dict = {"country": ["Brazil", "Russia", "India", "China", "South Africa"],
+       "capital": ["Brasilia", "Moscow", "New Dehli", "Beijing", "Pretoria"],
+       "area": [8.516, 17.10, 3.286, 9.597, 1.221],
+       "population": [200.4, 143.5, 1252, 1357, 52.98] }
+
+app = Flask(__name__)             
+
+@app.route("/")                  
+def hello():
+    brics = pd.DataFrame(dict)
+    return brics.to_json(orient='split')
+  
+if __name__ == "__main__":        
+    app.run(debug=True)                     
